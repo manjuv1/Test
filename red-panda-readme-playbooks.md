@@ -8,7 +8,7 @@
 
 **Provide Inputs:**
 
-Update all values in the json/csv files in [input/](./input/).
+Update all values in the input json files in the folder [input/](./input/).
 
 ## Pre-day 0 Playbooks
 
