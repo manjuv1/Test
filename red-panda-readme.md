@@ -187,6 +187,7 @@ ansible-playbook playbooks/config_Day1.yml
 **Note** If any of the above playbooks fails for any switches, rerun the playbook. Since Ansible is idempotent, rerunning it will not cause any issue.
 
 
+
 ## BGP Configuration
 
 Example of setting up BGP configuration is available in [bgp_configuration.md](bgp_configuration.md)
