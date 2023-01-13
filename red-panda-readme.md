@@ -144,7 +144,7 @@ Step 1: Validates inputs provided; Generates hostname and IPs, ansible variables
 ansible-playbook playbooks/generate_configs.yml
 ```
 
-Step 2: Copy the preDay0 configurations to target directory - dhcp/ztp configs, ansible variables/inventory
+Step 2: Copies the preDay0 configurations to target directory - dhcp/ztp configs, ansible variables/inventory
 
 ```
 ansible-playbook playbooks/config_preDay0.yml
