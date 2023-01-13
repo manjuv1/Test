@@ -183,6 +183,7 @@ ansible-playbook playbooks/config_Day1.yml
     ```
 
 **Note** Detailed info of playbooks/roles/modules used [README-playbooks.md](README-playbooks.md)
+
 **Note** If any of the above playbooks fails for any switches, rerun the playbook. Since Ansible is idempotent, rerunning it will not cause any issue.
 
 
