@@ -141,30 +141,35 @@ Details of inputs to be provided with example [README-inputs.md](README-inputs.m
 Step 1: Validates inputs provided; Generates hostname and IPs, ansible variables/inventory, dhcp/ztp configs
 
 ```
+ansible-playbook playbooks/generate_configs.yml
+```
+
+Step 2: Copy the preDay0 configurations to target directory - dhcp/ztp configs, ansible variables/inventory
+
+```
 ansible-playbook playbooks/config_preDay0.yml
 ```
 
-Step 2: Put devices in ONIE so that DHCP is triggered and devices come up in the required sonic image and ztp configs
+Step 3: Put devices in ONIE so that DHCP is triggered and devices come up in the required sonic image and ztp configs
 
 ```
 ansible-playbook playbooks/install_image.yaml -e "target_os=ONIE"
 ```
 
-Step 3: Set Day0 common configs for all devices (hostname, ntp, snmp, tacacs+/radius, syslog, banner, interface naming mode)
+Step 4: Set Day0 common configs for all devices (hostname, ntp, snmp, tacacs+/radius, syslog, banner, interface naming mode)
 
 ```
 ansible-playbook playbooks/config_Day0.yml
 ```
 
-Step 4: Validation Playbooks
-
-```
-ansible-playbook validate_reachability.yaml
-ansible-playbook validate_ztp_status.yaml
-ansible-playbook validate_os_type.yaml
-ansible-playbook validate_device_type.yaml
-ansible-playbook validate_version.yaml
-```
+- Validation Playbooks:
+    ```
+    ansible-playbook validate_reachability.yaml
+    ansible-playbook validate_ztp_status.yaml
+    ansible-playbook validate_os_type.yaml
+    ansible-playbook validate_device_type.yaml
+    ansible-playbook validate_version.yaml
+    ```
 
 Step 5: Set Day1 configs for all devices (ipv4 anycast MAC address, lag_interfaces, interfaces, l3_interfaces, bgp-default vrf, bgp_af, bgp_neighbors, mclag, vxlan)
 
