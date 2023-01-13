@@ -15,13 +15,12 @@ The following is a description of the inputs required from the user to generate 
 | ``switch_cli_password`` | string           |  Required | cli password |
 | ``management_network``    | string           |  Required | Management network to provide IPs for all devices in inventory |
 | ``management_gateway``       | string        |  Required | Management gateway |
-| ``automation_server_ip``                  | string            |  Required | Automation server IPv4 address where the ansible playbooks are executed |
-| ``file_server_ip``                 | string          |  Required | File server IPv4 address where external files are kept |
-| ``ztp_server_ip``           | string           |  Required | File server IPv4 address where ztp configs/scripts/binary are placed  |
+| ``automation_server``                  | string            |  Required | Automation server IPv4 address where the ansible playbooks are executed |
+| ``file_server``                 | string          |  Required | File server IPv4 address where external files are kept |
+| ``ztp_server``           | string           |  Required | File server IPv4 address where ztp configs/scripts/binary are placed  |
 | ``expected_os_version``               | string         |  Required | Expected OS version the devices are to be. Required for validation playbooks.  |
 | ``hostname_format``                 | string         |  Recommended | Host name format. <br/> - User can provide the hostname for any switch in the inventory input. <br/> - If hostname is not provided in input, the playbook generates hostname based on hostname_format. hostname_format is a string format with keywords within curly braces ``{}``. The keywords will be replaced with actual values. The format should be able to generate hostnames that uniquely identifies each device. <br/> Keywords that can be used within the ``{}`` in the format: ``site_code, role, pod_id, pod_name, rack_id, switch_id``. <br/> - If hostname_format is not provided, the default  ``{site_code}-{role}-p{pod_id}r{rack_id}sw{switch_id}`` will be used. <br/> Ex: ``sjc-leaf-p003r4sw01``, where sjc is the site_code, role is leaf, pod_num is 03, rack nmber is 04, switch number is  01. <br/> - If there is only one pod, following format can be used. ``{site_code}-{role}-r{rack_id}sw{switchid}`` <br/> Ex: ``sjc-lf-r04sw01`` <br/> - If site_code is not requried, use the following format. ``{role}-p{pod_id}r{rack_id}sw{switchid}`` <br/> Ex: ``leaf-p03r04sw01`` |
 | ``enable_mgmt_vrf``            | boolean        |  Required | Enable/Disable management vrf |
-| ``snmp_server``    | dictionary           |  Optional | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
 | ``ntp``       | dictionary        |  Optional | Configures the ntp. Refer enterprise_sonic resource module for format. |
 | ``logging``                  | dictionary            |  Optional | Configures the logging server. Refer enterprise_sonic resource module for format. |
 | ``radius``                 | dictionary          |  Optional | Configures the radius server. Refer enterprise_sonic resource module for format. |
@@ -57,6 +56,7 @@ The following is a description of the inputs required from the user to generate 
 | ``max_lease_time`` | integer           | ``7200`` | Max lease time to be configured in dhcpd.conf |
 | ``default_lease_time``    | integer           | ``600`` | default lease time to be configured in dhcpd.conf |
 | ``interface_naming``       | string        | ``standard`` | interface_naming to be used |
+| ``snmp_server``    | dictionary           |  Optional | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
 
 
 Example: Sample Input
