@@ -23,7 +23,7 @@ The following is a description of the inputs required from the user to generate 
 | ``enable_mgmt_vrf``            | boolean        |  Required | Enable/Disable management vrf |
 | ``ntp``       | dictionary        |  Optional | Configures the ntp. Refer enterprise_sonic resource module for format. |
 | ``logging``                  | dictionary            |  Optional | Configures the logging server. Refer enterprise_sonic resource module for format. |
-| ``radius``                 | dictionary          |  Optional | Configures the radius server. Refer enterprise_sonic resource module for format. |
+| ``radius``                 | dictionary          |  Optional | Configures the radius server. Refer enterprise_sonic resource module for format. <br/> Note: Either radius or tacacs can be provided; not both |
 | ``tacacs``                 | dictionary          |  Optional | Configures the tacacs server. Refer enterprise_sonic resource module for format. <br/> Note: Either radius or tacacs can be provided; not both |
 
 
