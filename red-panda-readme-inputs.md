@@ -56,7 +56,7 @@ The following is a description of the inputs required from the user to generate 
 | ``max_lease_time`` | integer           | ``7200`` | Max lease time to be configured in dhcpd.conf |
 | ``default_lease_time``    | integer           | ``600`` | default lease time to be configured in dhcpd.conf |
 | ``interface_naming``       | string        | ``standard`` | interface_naming to be used |
-| ``snmp_server``    | dictionary           |  Optional | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
+| ``snmp_server``    | dictionary           |  ``"agentaddress": [{ "listening_ip": "mgmt_interface_ip", "interface":"mgmt" }]`` | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
 
 
 Example: Sample Input
