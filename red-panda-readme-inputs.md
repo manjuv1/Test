@@ -4,7 +4,7 @@
 The following is a description of the inputs required from the user to generate the Ansible inventory used to deploy or update a toplogy.
 
 - Inputs have to be provided in a folder `input` within the playbook directory.
-- Other than the inventory file, all other inputs must use JSON. Inventory may use either CSV or JSON.
+- All inputs are provided in JSON.
 
 
 **fabric.json**
