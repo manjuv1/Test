@@ -48,14 +48,13 @@ Ansible Network Automation Framework
 
 - Fetch red panda to a folder
 
-        git clone https://github.com/Dell-Networking/red-panda.git
-        git checkout dev
+        git clone -b dev https://github.com/Dell-Networking/red-panda.git
 
 - Install required packages for automation
 
         sudo apt install sshpass
-        # You will need to cd to your red panda directory before executing this step
-        # The requirements.txt is at the top level
+        # The requirements.txt is at the top level in red panda directory
+        cd red-panda
         pip3 install -r requirements.txt
 
 - Install ansible collections for dellemc.enterprise_sonic
@@ -69,7 +68,7 @@ Ansible Network Automation Framework
         # If you did not adjust the path accordingly.
         ln -s ~/red-panda/dellemc/danaf danaf
 
-- Copy the sonic installer image to file server path (default: /var/www/html). This is the SONiC file you received from Dell. You will need to soft link it to the name `onie-installer` by using the command `ln -s <your_sonic_installer> <your_web_root>/onie-installer`. Ex: `ln -s Enterprise_SONiC_OS_4.0.3_vs_Standard.bin /var/www/html/onie-installer`
+- Copy the sonic installer image to file server path (default: /var/www/html). This is the SONiC file you received from Dell. You will need to soft link it to the name `onie-installer` by using the command <br/> `ln -s <your_sonic_installer> <your_web_root>/onie-installer`.<br/> Ex: `ln -s Enterprise_SONiC_OS_4.0.3_vs_Standard.bin /var/www/html/onie-installer`
 
         ls /var/www/html
         onie-installer
@@ -107,13 +106,13 @@ Run all commands from a user command prompt. Do not add sudo where not indicated
 
 - Fetch red panda to a folder
 
-        git clone https://github.com/Dell-Networking/red-panda.git
-        git checkout dev
+        git clone -b dev https://github.com/Dell-Networking/red-panda.git
 
 - Install required packages for automation
 
         sudo dnf install -y sshpass
         sudo dnf install -y python3-pip
+        cd red-panda
         pip3 install -r requirements.txt
 
 - Install ansible collections for dellemc.enterprise_sonic
@@ -124,10 +123,10 @@ Run all commands from a user command prompt. Do not add sudo where not indicated
 
         cd ~/.ansible/collections/ansible_collections/dellemc/
         # WARNING: This assumes you put the red-panda project in your home folder.
-        # If you did not adjust the path accordingly.
+        # If you did not, adjust the path accordingly.
         ln -s ~/red-panda/dellemc/danaf danaf
 
-- Copy the sonic installer image to file server path (default: /var/www/html). This is the SONiC file you received from Dell. You will need to soft link it to the name `onie-installer` by using the command `ln -s <your_sonic_installer> <your_web_root>/onie-installer`. Ex: `ln -s Enterprise_SONiC_OS_4.0.3_vs_Standard.bin /var/www/html/onie-installer`
+- Copy the sonic installer image to file server path (default: /var/www/html). This is the SONiC file you received from Dell. You will need to soft link it to the name `onie-installer` by using the command <br/> `ln -s <your_sonic_installer> <your_web_root>/onie-installer`.<br/> Ex: `ln -s Enterprise_SONiC_OS_4.0.3_vs_Standard.bin /var/www/html/onie-installer`
 
         ls /var/www/html
         onie-installer
