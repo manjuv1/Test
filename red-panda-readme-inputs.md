@@ -43,8 +43,16 @@ The following is a description of the inputs required from the user to generate 
 
 | Key        | Type                      | Support               | Description                                             |
 |------------|---------------------------|-----------------------|-------------------------------------------------------|
-| ``inventory.switches``            | list of dictionary       | Required | List of switches. <br/> - ``id`` integer, Required, unique Id starting with 1 <br/> - ``podId`` integer, Optional, Pod Id. Must be provided for leafs/spines <br/> - ``rackId`` integer, Optional, Rack Id. Must be provided for leafs <br/> - ``switchId`` integer, Required, switch Id. To identify the switch within a rack/spine/superspine. <br/> - ``role`` string, Required, "LEAF" or "SPINE" or "SUPERSPINE" <br/> - ``mac`` string, Required, MAC Address <br/> - ``name`` string, Optional, Host name. If not provided in input, will be generated. <br/> - ``ipAddress`` string, Optional, Management IP Address. If not provided in input, will be generated. |
+| ``inventory.switches``            | list of dictionary       | Required | List of switches. <br/> - ``id`` integer, Required, unique Id starting with 1 <br/> - ``podId`` integer, Optional, Pod Id. Must be provided for leafs/spines <br/> - ``rackId`` integer, Optional, Rack Id. Must be provided for leafs <br/> - ``switchId`` integer, Required, switch Id. To identify the switch within a rack/spine/superspine. <br/> - ``role`` string, Required, "leaf" or "spine" or "superspine" <br/> - ``mac`` string, Required, MAC Address <br/> - ``name`` string, Optional, Host name. If not provided in input, will be generated. <br/> - ``ipAddress`` string, Optional, Management IP Address. If not provided in input, will be generated. |
 
+
+**vlan_vrf.json**
+
+| Key        | Type                      | Support               | Description                                             |
+|------------|---------------------------|-----------------------|---------------------------------------------------------|
+| ``vrfs`` | list of dictionary           | Optional | List of vrfs <br/> - ``name`` string, Required, vrf name <br/> - ``l3_vni`` integer, Required, L3 vni |
+| ``vlans``    | list of dictionary           | Required | List of vlans <br/> - ``id`` integer, Required, vlan id <br/> - ``vni`` integer, Optional, vni; If not provided, will be same as vlan id <br/> - ``ip_subnet`` string, Required, subnet to be used for the vlan <br/> - ``vrf_name`` string, Optional, vrf to which the vlan is mapped; If not provided, will be mapped to default vrf <br/> - ``dhcp_relay_ips`` list of dictionary, Optional, list of dhcp relay IPs and corresponding vrf |
+| ``vlan_members``    | list of dictionary           | Required | Details of vlan members <br/> - ``portchannel_id`` integer, Optional, portchannel id; If not provided, vlan will be assgined to provided member ports instead of portchannel <br/> - ``member_ports`` string, Required, Interfaces listening on the vlan <br/> - ``hostname`` list of string, Required, list of leafs where the vlan has to be added <br/> - ``tagged_vlans`` list of integers, Optional, tagged vlan list to be mapped <br/> - ``untagged_vlan`` integer, Optional, untagged vlan <br/> - ``speed`` integer, Optional, interface speed |
 
 **defaults.json**
 
@@ -64,5 +72,7 @@ Example: Sample Input
 [pods.json](input/pods.json)
 
 [inventory.json](input/inventory.json)
+
+[vlan_vrf.json](input/vlan_vrf.json)
 
 [defaults.json](input/defaults.json)
