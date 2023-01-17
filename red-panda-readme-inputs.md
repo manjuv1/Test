@@ -34,7 +34,7 @@ The following is a description of the inputs required from the user to generate 
 | ``superspine``            | dictionary        | Required | Details of superspine supported. <br/> - ``superspine_model`` string, Required, superspine device model <br/> - ``breakout_mode`` string, Required, breakout mode for the superspine model <br/> - ``superspines_per_dc`` string, Required, Number of superspines supported per datacenter <br/> - ``superspine_loopback0_router_id_network`` string, Required, loopback0 router id network for superspines |
 | ``spine`` | dictionary           | Required | Details of spine supported. <br/> - ``spine_model`` string, Required, spine device model <br/> - ``spines_per_pod`` string, Required, Number of spines supported per pod |
 | ``leaf``    | dictionary           | Required | Details of leaf supported. <br/> - ``leaf_model`` string, Required, leaf device model <br/> - ``leafs_per_rack`` string, Required, Number of leafs supported per rack |
-| ``start_asn``           | integer           | Required | Starting ASN used to assign asn to all devices. The first asn is assigned to all superspines, followed by all pods in the order of pod ids. Within each pod, all spines has the same asn and each rack has unique asn i.e. leafs within a rack has the same asn. |
+| ``start_asn``           | integer           | Required | Starting ASN to assign asn to all devices. The first asn is assigned to all superspines, followed by all pods in the order of pod ids. Within each pod, all spines has the same asn and each rack has unique asn i.e. leafs within a rack has the same asn. |
 | ``no_of_pods``           | integer           | Required | Number of pods supported |
 | ``pods``               | list of dictionary       | Required | Details of each pod. <br/> - ``id`` integer, Required, unique Pod Id starting with 1 <br/> - ``name`` string, Required, Pod name <br/> - ``no_of_racks`` integer, Required, Number of racks supported per Pod <br/> - ``loopback0_router_id_network`` integer, Required, loopback0 router id network <br/> - ``loopback1_vtep_network`` integer, Required, loopback1 vtep network <br/> - ``loopback2_network`` integer, Required, loopback2 network |
 
@@ -62,7 +62,13 @@ The following is a description of the inputs required from the user to generate 
 | ``max_lease_time`` | integer           | ``7200`` | Max lease time to be configured in dhcpd.conf |
 | ``default_lease_time``    | integer           | ``600`` | default lease time to be configured in dhcpd.conf |
 | ``interface_naming``       | string        | ``standard`` | interface_naming to be used |
-| ``snmp_server``    | dictionary           |  ``{"agentaddress": [{ "listening_ip": "mgmt_interface_ip", "interface":"mgmt" }]}`` | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
+| ``dhcp_server``    | string           |  ``isc-dhcp-server`` | dhcp service supported. |
+| ``peerlink_portchannel_id``    | string           |  ``128`` | dhcp service supported. |
+| ``mclag_domain_id``    | string           |  ``1`` | dhcp service supported. |
+| ``vtep_name``    | string           |  ``vtep_DC`` | dhcp service supported. |
+| ``anycast_mac_address``    | string           |  ``00:00:00:11:11:11`` | dhcp service supported. |
+| ``model_support_data``    | string           |  ``isc-dhcp-server`` | dhcp service supported. |
+| ``dhcp_src_int``    | string           |  ``Loopback0`` | dhcp service supported. |
 
 
 Example: Sample Input
