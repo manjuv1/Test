@@ -5,6 +5,8 @@
   - [Config Generation Playbooks](#config-generation-playbooks)
   - [Pre-day 0 Playbooks](#pre-day-0-playbooks)
   - [Day 0 Playbooks:](#day-0-playbooks)
+  - [Day 1 Playbooks:](#day-1-playbooks)
+  - [Day 2 Playbooks:](#day-2-playbooks)
   - [Validation Playbooks](#validation-playbooks)
 
 **Provide Inputs:**
@@ -13,7 +15,7 @@ Update all values in the input json files in the folder [input/](./input/).
 
 ## Config Generation Playbooks
 
-Playbook: `ansible-playbook playbooks/config_preDay0.yml`
+Playbook: `ansible-playbook playbooks/generate_configs.yml`
 
 Purpose: Validates inputs provided, generates hostname and IPs, ansible variables/inventory, dhcp/ztp configs
 
@@ -77,6 +79,8 @@ On execution of above playbook, below playbooks are imported.
 
 
 ## Pre-day 0 Playbooks
+
+Playbook: `ansible-playbook playbooks/config_preDay0.yml`
 
 - Playbook: playbooks/all/cp_dhcp_inv_ztp.yml
 
@@ -176,6 +180,45 @@ Playbook: `ansible-playbook playbooks/config_Day1.yml`
           tasks/main.yml:
                    Purpose: Configure VXLAN
 ```
+
+## Day 2 Playbooks:
+
+Playbook: `ansible-playbook playbooks/config_Day2.yml`
+
+```yml
+        Purpose: Set Day2 vlan/vrf configs for all devices (vrf, bgp-vrf tenant, vni_vrf_map, loopback2, vlan, vni_vlan_map, portchannel))
+        Role: dellemc.danaf.interfaces
+          tasks/main.yml:
+                   Purpose: Configure sonic interfaces
+        Role: dellemc.danaf.vlan
+          tasks/main.yml:
+                   Purpose: Configure sonic vlans
+        Role: dellemc.danaf.vrf
+          tasks/main.yml:
+                   Purpose: Configure sonic vrfs
+        Role: dellemc.danaf.vxlan
+          tasks/main.yml:
+                   Purpose: Configure sonic vxlan
+        Role: dellemc.danaf.lag_interfaces
+          tasks/main.yml:
+                   Purpose: Configure sonic LAG interfaces
+        Role: dellemc.danaf.l3_interfaces
+          tasks/main.yml:
+                   Purpose: Configure sonic l3 interfaces
+        Role: dellemc.danaf.l2_interfaces
+          tasks/main.yml:
+                   Purpose: Configure sonic l2 interfaces
+        Role: dellemc.danaf.dhcp_relay
+          tasks/main.yml:
+                   Purpose: Configure DHCP relay
+        Role: dellemc.danaf.bgp
+          tasks/main.yml:
+                   Purpose: Configure router BGP for default vrf
+        Role: dellemc.danaf.bgp_af
+          tasks/main.yml:
+                   Purpose: Configure BGP Address Family
+```
+
 
 ## Validation Playbooks
 
