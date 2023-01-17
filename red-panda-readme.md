@@ -176,7 +176,7 @@ Step 5: Set Day1 configs for all devices (ipv4 anycast MAC address, lag_interfac
 ansible-playbook playbooks/config_Day1.yml
 ```
 
-Step 6: Set Day2 vlan/vrf configs for all devices (vrf, bgp-vrf tenant, vni_vrf_map, loopback2, vlan, vni_vlan_map, portchannel)
+Step 6: Set Day2 vlan/vrf configs for all devices (vrf, vlan, bgp-vrf, vni_vrf_map, vni_vlan_map, portchannel, interface speed)
 
 ```
 ansible-playbook playbooks/config_Day2.yml
