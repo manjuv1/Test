@@ -186,7 +186,7 @@ Playbook: `ansible-playbook playbooks/config_Day1.yml`
 Playbook: `ansible-playbook playbooks/config_Day2.yml`
 
 ```yml
-        Purpose: Set Day2 vlan/vrf configs for all devices (vrf, bgp-vrf tenant, vni_vrf_map, loopback2, vlan, vni_vlan_map, portchannel))
+        Purpose: Set Day2 vlan/vrf configs for all devices (vrf, vlan, bgp-vrf, vni_vrf_map, vni_vlan_map, portchannel, interface speed)
         Role: dellemc.danaf.interfaces
           tasks/main.yml:
                    Purpose: Configure sonic interfaces
@@ -213,7 +213,7 @@ Playbook: `ansible-playbook playbooks/config_Day2.yml`
                    Purpose: Configure DHCP relay
         Role: dellemc.danaf.bgp
           tasks/main.yml:
-                   Purpose: Configure router BGP for default vrf
+                   Purpose: Configure router BGP for vrf
         Role: dellemc.danaf.bgp_af
           tasks/main.yml:
                    Purpose: Configure BGP Address Family
