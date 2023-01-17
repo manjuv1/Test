@@ -2,6 +2,7 @@
 # README - Code Flow
 
 - [README - Code Flow](#readme---code-flow)
+  - [Config Generation Playbooks](#config-generation-playbooks)
   - [Pre-day 0 Playbooks](#pre-day-0-playbooks)
   - [Day 0 Playbooks:](#day-0-playbooks)
   - [Validation Playbooks](#validation-playbooks)
@@ -10,7 +11,7 @@
 
 Update all values in the input json files in the folder [input/](./input/).
 
-## Pre-day 0 Playbooks
+## Config Generation Playbooks
 
 Playbook: `ansible-playbook playbooks/config_preDay0.yml`
 
@@ -73,6 +74,9 @@ On execution of above playbook, below playbooks are imported.
         Output:
           Detailed json: inventory/generated_configs
 ```
+
+
+## Pre-day 0 Playbooks
 
 - Playbook: playbooks/all/cp_dhcp_inv_ztp.yml
 
