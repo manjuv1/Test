@@ -63,12 +63,13 @@ The following is a description of the inputs required from the user to generate 
 | ``default_lease_time``    | integer           | ``600`` | default lease time to be configured in dhcpd.conf |
 | ``interface_naming``       | string        | ``standard`` | interface_naming to be used |
 | ``dhcp_server``    | string           |  ``isc-dhcp-server`` | dhcp service supported. |
-| ``peerlink_portchannel_id``    | string           |  ``128`` | dhcp service supported. |
-| ``mclag_domain_id``    | string           |  ``1`` | dhcp service supported. |
-| ``vtep_name``    | string           |  ``vtep_DC`` | dhcp service supported. |
-| ``anycast_mac_address``    | string           |  ``00:00:00:11:11:11`` | dhcp service supported. |
-| ``model_support_data``    | string           |  ``isc-dhcp-server`` | dhcp service supported. |
-| ``dhcp_src_int``    | string           |  ``Loopback0`` | dhcp service supported. |
+| ``peerlink_portchannel_id``    | integer           |  ``128`` | Peer link portchannel IDs for leafs |
+| ``mclag_domain_id``    | integer           |  ``1`` | MCLAG domain Id |
+| ``snmp_server``    | dictionary           |  ``{"agentaddress": [{ "listening_ip": "mgmt_interface_ip", "interface":"mgmt" }]}`` | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
+| ``vtep_name``    | string           |  ``vtep_DC`` | VTEP name |
+| ``anycast_mac_address``    | string           |  ``00:00:00:11:11:11`` | anycast mac address |
+| ``model_support_data``    | dictionary           |  Refer json file | Contains details of model specific information like max interfaces supported, icl ports etc |
+| ``dhcp_src_int``    | string           |  ``Loopback0`` | source interface to be configured in dhcp relay |
 
 
 Example: Sample Input
