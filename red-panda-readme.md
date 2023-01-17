@@ -176,7 +176,7 @@ Step 5: Set Day1 configs for all devices (ipv4 anycast MAC address, lag_interfac
 ansible-playbook playbooks/config_Day1.yml
 ```
 
-- Validation: Set sample VLAN and VRF configs for leaf devices to validate Day1 (vrf, bgp- vrf tenant, vni_vrf_map, loopback2, vlan, vni_vlan_map, portchannel ) <br/> Note: This validation is needed only to validation the Day1 configuration before applying the actual VLAN configurations. If not needed, we can skip this step.
+- Validation: Set sample VLAN and VRF configs for leaf devices to validate Day1 (vrf, bgp- vrf tenant, vni_vrf_map, loopback2, vlan, vni_vlan_map, portchannel ) <br/> Note: Skip this step if validations can be done with the actual day2 configs instead of this sample test config.
     ```
     ansible-playbook playbooks/test/cfg_vrf_vlan.yml 
     ```
