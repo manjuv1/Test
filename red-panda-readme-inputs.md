@@ -13,7 +13,7 @@ The following is a description of the inputs required from the user to generate 
 |------------|---------------------------|------------------------|--------------------------------------------------------|
 | ``site_name``            | string        |  Recommended | Site name to be used  |
 | ``switch_cli_password`` | string           |  Required | cli password |
-| ``management_network``    | string           |  Required | Management network to provide IPs for all devices in inventory. <br/> The first 10 IPs are reserved for other purposes. The IPs starting from 11 are assigned for all superspines followed by pods. Within pods, first assigned for spines and for maximum racks supported in the pod in the order of rackIds. |
+| ``management_network``    | string           |  Required | Management network to provide IPs for all devices in inventory. <br/> The first 10 IPs are reserved for other purposes. The IPs starting from 11 are assigned for all superspines followed by pods. Within pods, first spines in the order of switchId are assigned followed by the racks in the order of rackIds. IPs are reserved for the maximum racks supported in the pod even if all racks are not yet provisioned. Within racks, IPs are assigned in the order of the switchId. |
 | ``management_gateway``       | string        |  Required | Management gateway |
 | ``automation_server``                  | string            |  Required | Automation server IPv4 address where the ansible playbooks are executed |
 | ``file_server``                 | string          |  Required | File server IPv4 address where external files are kept |
