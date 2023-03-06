@@ -139,7 +139,8 @@ docker-compose-files/redpanda.sh setup
 
 Red Panda will automatically build itself and after the end of the build sequence deploy the Red Panda Automation Server container.
 
-### Troubleshooting setup issues (these will be fixed in automation later and removed from documentation)
+#### Troubleshooting setup issues 
+(these will be fixed in automation later and removed from documentation)
 
 Verify if the dhcpd/apache are started properly by issuing the below command
 
@@ -152,6 +153,7 @@ If dhcpd has not started, issue the below command.
 Issue below commands to download specific 4.1.0 version of netcomm ansible collection. The latest version of netcomm ansible collection is not compatible with enterprise sonic ansible collection. 
 
 `docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon`
+
 `docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0`
 
 ## Controlling the Red Panda Container
