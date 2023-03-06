@@ -57,6 +57,8 @@ We will add support for newer versions but for initial development we have locke
 
 Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems.
 
+Provide sudo permission for the user.
+
 ## Red Panda Setup
 
 The automation Server provides the following services:
@@ -68,15 +70,18 @@ The automation Server provides the following services:
 
 ### Install Docker
 
-See [Install Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu/) for details on how to install Docker in Ubuntu.
-See [Install Docker in Rocky Linux](https://docs.rockylinux.org/gemstones/docker/) for details on how to install Docker in Rocky Linux.
+See [here](https://docs.docker.com/engine/install/ubuntu/) for details on how to install Docker in Ubuntu.
+
+See [here](https://docs.rockylinux.org/gemstones/docker/) for details on how to install Docker in Rocky Linux.
+
+Add the user to the docker group.
 
 ```bash
 sudo groupadd docker
 sudo usermod -aG docker <YOUR_USER>
 ```
 
-and then log out and back in. Run `docker run hello-world` as the user in question to test your privileges. If this does not run correctly, Red Panda will not run correctly.
+and then log out and log back in. Run `docker run hello-world` as the user in question to test your privileges. If this does not run correctly, Red Panda will not run correctly.
 
 ### Install docker-compose
 
@@ -126,7 +131,28 @@ See [README-inputs.md](README-inputs.md) for details on user required input.
 
 **NOTE** You will need an internet connection for this step.
 
-To prepare Red Panda to deploy your infrastructure, the only thing you need to do is run `docker-compose-files/redpanda.sh setup`. Red Panda will automatically build itself and after the end of the build sequence deploy the Red Panda Automation Server container.
+To prepare Red Panda to deploy your infrastructure, the only thing you need to do is run 
+
+```
+docker-compose-files/redpanda.sh setup
+```
+
+Red Panda will automatically build itself and after the end of the build sequence deploy the Red Panda Automation Server container.
+
+### Troubleshooting setup issues (these will be fixed in automation later and removed from documentation)
+
+Verify if the dhcpd/apache are started properly by issuing the below command
+
+`docker-compose-files/redpanda.sh status`
+
+If dhcpd has not started, issue the below command.
+
+`docker exec -it redpanda-automation-server supervisorctl start dhcpd`
+
+Issue below commands to download specific 4.1.0 version of netcomm ansible collection. The latest version of netcomm ansible collection is not compatible with enterprise sonic ansible collection. 
+
+`docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon`
+`docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0`
 
 ## Controlling the Red Panda Container
 
@@ -138,7 +164,9 @@ Red Panda runs in Docker and is controlled via underlying `docker-compose` comma
 
 After preparing the input files you are ready to generate the configurations which will be pushed to the switches and prepare for day 0. To do this run:
 
-`docker-compose-files/redpanda.sh preday0`
+```
+docker-compose-files/redpanda.sh preday0
+```
 
 This command will do the following two things:
 - Validates inputs provided; Generates hostname and IPs, ansible variables/inventory, dhcp/ztp configs
@@ -149,7 +177,7 @@ This command will do the following two things:
 The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. Run:
 
 ```
-docker-compose-files/redpanda.sh day0-install-sonic
+docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/install_image.yaml -e "target_os=ONIE ansible_password=admin"
 ```
 
 ### Push Day 0 Configs
@@ -165,20 +193,6 @@ The next step is to push day 0 common configs to all devices:
 
 ```
 docker-compose-files/redpanda.sh day0-push-configs
-```
-
-### Run Day 0 Validation
-
-The next step is to run validation for day 0 to make sure that all tasks completed successfully. Validation covers the following:
-
-- Reachability
-- ZTP status
-- Operating system
-- Device types
-- Versions
-
-```
-docker-compose-files/redpanda.sh day0-validation
 ```
 
 ### Run ALL Configurations
