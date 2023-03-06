@@ -186,7 +186,7 @@ docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.n
 
 ### Install SONiC
 
-The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. Run:
+The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. Run by passing current password in ansible_password:
 
 ```
 docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/install_image.yaml -e "target_os=ONIE ansible_password=admin"
