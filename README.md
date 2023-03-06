@@ -139,29 +139,6 @@ docker-compose-files/redpanda.sh setup
 
 Red Panda will automatically build itself and after the end of the build sequence deploy the Red Panda Automation Server container.
 
-### Troubleshooting setup issues 
-(these will be fixed in automation later and removed from documentation)
-
-#### DHCP service not started
-
-Verify if the dhcpd/apache are started properly by issuing the below command
-
-`docker-compose-files/redpanda.sh status`
-
-If dhcpd has not started, issue the below command.
-
-`docker exec -it redpanda-automation-server supervisorctl start dhcpd`
-
-#### 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 
-
-The netcommon ansible collection 5.0.0 is not compatible with enterprise sonic ansible collection 2.0.0. This incompatibility will be fixed in enterprise sonic. 
-As a workaround, issue below commands to download specific 4.1.0 version of netcommon ansible collection. 
-
-```
-docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon
-docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0
-```
-
 ## Controlling the Red Panda Container
 
 Red Panda runs in Docker and is controlled via underlying `docker-compose` commands. Run `docker-compose-files/redpanda.sh stop` to shutdown the Red Panda container. Run `docker-compose-files/redpanda.sh start` to start a stopped Red Panda container.
@@ -179,6 +156,33 @@ docker-compose-files/redpanda.sh preday0
 This command will do the following two things:
 - Validates inputs provided; Generates hostname and IPs, ansible variables/inventory, dhcp/ztp configs
 - Copies the preDay0 configurations to target directory - dhcp/ztp configs, ansible variables/inventory
+
+#### Troubleshooting issues 
+(these will be fixed in automation later and removed from documentation)
+
+##### DHCP service not started
+
+Verify if the dhcpd/apache are started properly by issuing the below command
+
+`docker-compose-files/redpanda.sh status`
+
+If dhcpd has not started, issue the below command.
+
+`docker exec -it redpanda-automation-server supervisorctl start dhcpd`
+
+##### 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 
+
+Issue below command to check the collection versions in the container.
+
+`docker-compose-files/redpanda.sh run ansible-galaxy collection list`
+
+The netcommon ansible collection 5.0.0 is not compatible with enterprise sonic ansible collection 2.0.0. This incompatibility will be fixed in enterprise sonic. 
+If the netcommon version listed above is 5.0.0, as a workaround issue below commands to download specific 4.1.0 version of netcommon ansible collection. 
+
+```
+docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon
+docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0
+```
 
 ### Install SONiC
 
