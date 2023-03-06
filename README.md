@@ -222,18 +222,6 @@ Next is VLANs configuration. Pushes the following configs for all devices:
 ```
 docker-compose-files/redpanda.sh vlans
 ```
-
-### Run wiring Validation
-
-The next step is to run validation for topology to make sure that wiring is proper and lldp neighbors are discovered successfully. Validation covers the following:
-
-- lldp neighbors
-- Generate report (html)
-
-```
-docker-compose-files/redpanda.sh wiring-validation
-```
-
 ## Helpful Commands
 
 This section covers some quick tips and tricks for using the Red Panda automation server.
