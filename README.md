@@ -68,14 +68,15 @@ The automation Server provides the following services:
 
 ### Install Docker
 
+See [Install Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu/) for details on how to install Docker in Ubuntu.
+See [Install Docker in Rocky Linux](https://docs.rockylinux.org/gemstones/docker/) for details on how to install Docker in Rocky Linux.
+
 ```bash
 sudo groupadd docker
 sudo usermod -aG docker <YOUR_USER>
 ```
 
 and then log out and back in. Run `docker run hello-world` as the user in question to test your privileges. If this does not run correctly, Red Panda will not run correctly.
-
-See [Using Docker](#using-docker) for details on how to use Docker for this project.
 
 ### Install docker-compose
 
