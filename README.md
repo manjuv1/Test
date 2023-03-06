@@ -150,11 +150,12 @@ If dhcpd has not started, issue the below command.
 
 `docker exec -it redpanda-automation-server supervisorctl start dhcpd`
 
-Issue below commands to download specific 4.1.0 version of netcomm ansible collection. The latest version of netcomm ansible collection is not compatible with enterprise sonic ansible collection. 
+The latest version of netcomm ansible collection is not compatible with enterprise sonic ansible collection. This will be fixed in enterprise sonic. As a workaround, issue below commands to download specific 4.1.0 version of netcomm ansible collection. 
 
-`docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon`
-
-`docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0`
+```
+docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon
+docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0
+```
 
 ## Controlling the Red Panda Container
 
