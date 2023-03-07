@@ -245,7 +245,7 @@ docker-compose-files/redpanda.sh all
 
 ### Breakout for server connected ports
 
-Breakout of server connected ports will be added in Red Panda later. For now, excute the below command manually for the server connected ports.
+Breakout of server connected ports will be added in Red Panda later. For now, execute the below command manually for the server connected ports.
 
 ```
 interface breakout port <port_number> mode <breakout_mode>
