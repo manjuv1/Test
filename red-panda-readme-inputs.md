@@ -1,17 +1,17 @@
 
 # README - Inputs
 
-The following is a description of the inputs required from the user to generate the Ansible inventory used to deploy or update a toplogy.
+The following is a description of the inputs required from the user to generate the Ansible inventory used to deploy or update a topology.
 
 - Inputs have to be provided in a folder `input` within the playbook directory.
-- All inputs are provided in JSON.
+- All inputs are provided in yml.
 
 
-**fabric.json**
+**fabric.yml**
 
 | Key        | Type                      | Support               |Description                                             | 
 |------------|---------------------------|------------------------|--------------------------------------------------------|
-| ``site_name``            | string        |  Recommended | Site name to be used  |
+| ``site_code``            | string        |  Required | Site code to be used  |
 | ``switch_cli_password`` | string           |  Required | cli password |
 | ``management_network``    | string           |  Required | Management network to provide management IPs for all devices in inventory. <br/> The first 10 IPs are reserved for other purposes. The IPs starting from 11 are assigned for all superspines followed by pods. Within pods, first spines are assigned in the order of switchId followed by the racks in the order of rackIds. IPs are reserved for the maximum racks supported in the pod even if all racks are not yet provisioned. Within racks, IPs are assigned in the order of the switchId. |
 | ``management_gateway``       | string        |  Required | Management gateway |
@@ -27,34 +27,35 @@ The following is a description of the inputs required from the user to generate 
 | ``tacacs``                 | dictionary          |  Optional | Configures the tacacs server. Refer enterprise_sonic resource module for format. <br/> Note: Either radius or tacacs can be provided; not both |
 
 
-**pods.json**
+**pods.yml**
 
 | Key        | Type                      | Support               | Description                                             |
 |------------|---------------------------|-----------------------|---------------------------------------------------------|
-| ``superspine``            | dictionary        | Required | Details of superspine supported. <br/> - ``superspine_model`` string, Required, superspine device model <br/> - ``breakout_mode`` string, Required, breakout mode for the superspine model <br/> - ``superspines_per_dc`` string, Required, Number of superspines supported per datacenter <br/> - ``superspine_loopback0_router_id_network`` string, Required, loopback0 router id network for superspines |
+| ``superspine``            | dictionary        | Optional | Details of superspine supported. <br/> - ``superspine_model`` string, Required, superspine device model <br/> - ``breakout_mode`` string, Required, breakout mode for the superspine model <br/> - ``superspines_per_dc`` string, Required, Number of superspines supported per datacenter <br/> - ``superspine_loopback0_router_id_network`` string, Required, loopback0 router id network for superspines |
 | ``spine`` | dictionary           | Required | Details of spine supported. <br/> - ``spine_model`` string, Required, spine device model <br/> - ``spines_per_pod`` string, Required, Number of spines supported per pod |
-| ``leaf``    | dictionary           | Required | Details of leaf supported. <br/> - ``leaf_model`` string, Required, leaf device model <br/> - ``leafs_per_rack`` string, Required, Number of leafs supported per rack |
+| ``leaf``    | dictionary           | Required | Details of leaf supported. <br/> - ``leaf_model`` string, Required, leaf device model <br/> - ``leafs_per_rack`` string, Required, Number of leafs supported per rack <br/> - ``mclag`` dict, Optional <br/> ``mclag.domain_id`` integer, Required, mclag domain id; default value: 1 <br/> ``mclag.portchannel_id`` integer, Required, peerlink portchannel id; default value: 128 <br/>|
 | ``start_asn``           | integer           | Required | Starting ASN to assign asn to all devices. The first asn is assigned to all superspines. In each pod, all spines has the same asn and each rack has unique asn i.e. leafs within a rack has the same asn. Second asn is assigned to spines in first pod. Next asn number is assigned for leaf switches in first rack of the first pod and so on. ASNs are reserved for maximum racks even if they are not yet provisioned. ASNs are assigned to devices in the order of the podIds. |
 | ``no_of_pods``           | integer           | Required | Number of pods supported |
 | ``pods``               | list of dictionary       | Required | Details of each pod. <br/> - ``id`` integer, Required, unique Pod Id starting with 1 <br/> - ``name`` string, Required, Pod name <br/> - ``no_of_racks`` integer, Required, Number of racks supported per Pod <br/> - ``loopback0_router_id_network`` integer, Required, loopback0 router id network <br/> - ``loopback1_vtep_network`` integer, Required, loopback1 vtep network |
 
 
-**inventory.json**
+**inventory.yml**
 
 | Key        | Type                      | Support               | Description                                             |
 |------------|---------------------------|-----------------------|-------------------------------------------------------|
 | ``inventory.switches``            | list of dictionary       | Required | List of switches. <br/> - ``id`` integer, Required, unique Id starting with 1 <br/> - ``podId`` integer, Optional, Pod Id. Must be provided for leafs/spines <br/> - ``rackId`` integer, Optional, Rack Id. Must be provided for leafs <br/> - ``switchId`` integer, Required, switch Id. To identify the switch within a rack/spine/superspine. <br/> - ``role`` string, Required, "leaf" or "spine" or "superspine" <br/> - ``mac`` string, Required, MAC Address <br/> - ``name`` string, Optional, Host name. If not provided in input, will be generated. <br/> - ``ipAddress`` string, Optional, Management IP Address. If not provided in input, will be generated. |
 
 
-**vlan_vrf.json**
+**vlan_vrf.yml**
 
 | Key        | Type                      | Support               | Description                                             |
 |------------|---------------------------|-----------------------|---------------------------------------------------------|
 | ``vrfs`` | list of dictionary           | Optional | List of vrfs <br/> - ``name`` string, Required, vrf name <br/> - ``l3_vni`` integer, Required, L3 vni |
-| ``vlans``    | list of dictionary           | Required | List of vlans <br/> - ``id`` integer, Required, vlan id <br/> - ``vni`` integer, Optional, vni; If not provided, will be same as vlan id <br/> - ``ip_subnet`` string, Required, subnet to be used for the vlan <br/> - ``vrf_name`` string, Optional, vrf to which the vlan is mapped; If not provided, will be mapped to default vrf <br/> - ``dhcp_relay_ips`` list of dictionary, Optional, list of dhcp relay IPs and corresponding vrf |
+| ``dhcp_relay_ips``    | list of dictionary           | Required | List of dhcp relay ips <br/> - ``id`` integer, Required <br/> - ``ip`` string, Required, DHCP Server address <br/> - ``vrf_name`` string, Optional, vrf to which the dhcp server is mapped; If not provided, will be mapped to default vrf |
+| ``vlans``    | list of dictionary           | Required | List of vlans <br/> - ``id`` integer, Required, vlan id (vni will be same as vlan id) <br/> - ``ip_subnet`` string, Required, subnet to be used for the vlan <br/> - ``vrf_name`` string, Optional, vrf to which the vlan is mapped; If not provided, will be mapped to default vrf <br/> - ``dhcp_relay_ids`` list of ids in ``dhcp_relay_ips``|
 | ``vlan_members``    | list of dictionary           | Required | Details of vlan members <br/> - ``member_ports`` string, Required, Interfaces listening on the vlan <br/> - ``portchannel_id`` integer, Optional, portchannel id; If not provided, vlan will be assigned to provided member ports instead of portchannel <br/> - ``hostname`` list of string, Required, list of leafs where the vlan has to be added <br/> - ``tagged_vlans`` list of integers, Optional, tagged vlan list to be mapped <br/> - ``untagged_vlan`` integer, Optional, untagged vlan <br/> - ``speed`` integer, Optional, interface speed |
 
-**defaults.json**
+**defaults.yml**
 
 | Key        | Type                      | Default               | Description                                             |
 |------------|---------------------------|-----------------------|---------------------------------------------------------|
@@ -62,24 +63,22 @@ The following is a description of the inputs required from the user to generate 
 | ``max_lease_time`` | integer           | ``7200`` | Max lease time to be configured in dhcpd.conf |
 | ``default_lease_time``    | integer           | ``600`` | default lease time to be configured in dhcpd.conf |
 | ``interface_naming``       | string        | ``standard`` | interface_naming to be used |
-| ``dhcp_server``    | string           |  ``isc-dhcp-server`` | dhcp service supported. |
-| ``peerlink_portchannel_id``    | integer           |  ``128`` | Peer link portchannel IDs for leafs |
-| ``mclag_domain_id``    | integer           |  ``1`` | MCLAG domain Id |
+| ``max_interlink_portchannel_id``    | integer           |  ``127`` | Max interlink portchannel ID. |
 | ``snmp_server``    | dictionary           |  ``{"agentaddress": [{ "listening_ip": "mgmt_interface_ip", "interface":"mgmt" }]}`` | Configures snmp_server details. Refer enterprise_sonic resource module for format. |
 | ``vtep_name``    | string           |  ``vtep_DC`` | VTEP name |
 | ``anycast_mac_address``    | string           |  ``00:00:00:11:11:11`` | anycast mac address |
-| ``model_support_data``    | dictionary           |  Refer json file | Contains details of model specific information like max interfaces supported, icl ports etc |
+| ``model_support_data``    | dictionary           |  Refer yml file | Contains details of model specific information like max interfaces supported, icl ports etc |
 | ``dhcp_src_int``    | string           |  ``Loopback0`` | source interface to be configured in dhcp relay |
 
 
 Example: Sample Input
 -------
-[fabric.json](input/fabric.json)
+[fabric.yml](input/fabric.yml)
 
-[pods.json](input/pods.json)
+[pods.yml](input/pods.yml)
 
-[inventory.json](input/inventory.json)
+[inventory.yml](input/inventory.yml)
 
-[vlan_vrf.json](input/vlan_vrf.json)
+[vlan_vrf.yml](input/vlan_vrf.yml)
 
-[defaults.json](input/defaults.json)
+[defaults.yml](input/defaults.yml)
