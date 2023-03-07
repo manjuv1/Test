@@ -158,7 +158,7 @@ This command will do the following two things:
 #### Troubleshooting issues in preday0
 (these will be fixed in automation later and removed from documentation)
 
-##### DHCP service not started
+##### 1) DHCP service not started
 
 Verify if the dhcpd/apache are started properly by issuing the below command
 
@@ -168,7 +168,7 @@ If dhcpd has not started, issue the below command.
 
 `docker exec -it redpanda-automation-server supervisorctl start dhcpd`
 
-##### 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 ansible collection
+##### 2) 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 ansible collection
 
 Issue below command to check the collection versions in the container.
 
@@ -219,7 +219,7 @@ The next step is to push day 0 common configs to all devices:
 docker-compose-files/redpanda.sh day0-push-configs
 ```
 
-### Run ALL Configurations
+### Run ALL Day1 Configurations
 
 Next is all configurations. Pushes the following configs for all devices:
 - ipv4 anycast
@@ -243,7 +243,11 @@ Next is all configurations. Pushes the following configs for all devices:
 docker-compose-files/redpanda.sh all
 ```
 
-### Breakout for server connected ports
+### Run Day2 VLAN configuration
+
+The previous day1 playbook also configures vlan/vrf if already provided in input. The below is required only when we change only the vlan/vrf inputs. 
+
+##### Breakout for server connected ports
 
 Breakout of server connected ports will be added in Red Panda later. For now, execute the below command manually for the server connected ports.
 
@@ -253,9 +257,13 @@ interface breakout port <port_number> mode <breakout_mode>
 
 Ex: `interface breakout port 1/2 mode 8x10G`
 
-### Run VLANs Configuration
+##### Regenerate the ansible variables if vlan/vrf input is modified
 
-Next is Day2 VLAN configuration when there are changes to vrf/vlan input only. Pushes the following configs for all devices:
+```
+docker-compose-files/redpanda.sh preday0-generate-configs
+```
+
+##### Pushes the following configs for all devices:
 
 - portchannel
 - interface speed
@@ -267,10 +275,10 @@ Next is Day2 VLAN configuration when there are changes to vrf/vlan input only. P
 - BGP-VRF
 - BGP_af
 
-
 ```
 docker-compose-files/redpanda.sh vlans
 ```
+
 ## Helpful Commands
 
 This section covers some quick tips and tricks for using the Red Panda automation server.
