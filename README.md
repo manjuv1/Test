@@ -55,9 +55,7 @@ We will add support for newer versions but for initial development we have locke
 - Ubuntu
 - RHEL family systems (includes Rocky Linux)
 
-Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems.
-
-Make sure sudo permission is available for the user.
+Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems. Make sure sudo permission is available for the user.
 
 ## Red Panda Setup
 
@@ -157,7 +155,7 @@ This command will do the following two things:
 - Validates inputs provided; Generates hostname and IPs, ansible variables/inventory, dhcp/ztp configs
 - Copies the preDay0 configurations to target directory - dhcp/ztp configs, ansible variables/inventory
 
-#### Troubleshooting issues 
+#### Troubleshooting issues in preday0
 (these will be fixed in automation later and removed from documentation)
 
 ##### DHCP service not started
@@ -170,7 +168,7 @@ If dhcpd has not started, issue the below command.
 
 `docker exec -it redpanda-automation-server supervisorctl start dhcpd`
 
-##### 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 
+##### 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 ansible collection
 
 Issue below command to check the collection versions in the container.
 
@@ -180,16 +178,30 @@ The netcommon ansible collection 5.0.0 is not compatible with enterprise sonic a
 If the netcommon version listed above is 5.0.0, as a workaround issue below commands to download specific 4.1.0 version of netcommon ansible collection. 
 
 ```
-docker-compose-files/redpanda.sh run rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon
-docker-compose-files/redpanda.sh run ansible-galaxy collection install ansible.netcommon:4.1.0
+docker exec -it redpanda-automation-server rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon
+docker exec -it redpanda-automation-server ansible-galaxy collection install ansible.netcommon:4.1.0
 ```
 
 ### Install SONiC
 
-The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. Run by passing current password in ansible_password:
+The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. Pass current switch password in ansible_password.
 
 ```
 docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/install_image.yaml -e "target_os=ONIE ansible_password=admin"
+```
+
+#### Troubleshooting issues in install 
+
+##### Reload task in install_image playbook throws below error
+But the reload is triggered in the switches. So this error can be ignored. We are working to fix this error.
+
+TASK [dellemc.danaf.image : Reload the Device] **********************************************
+fatal: [RP-spine-r01sw02]: FAILED! => {"changed": false, "msg": "Negative size passed to PyBytes_FromStringAndSize", "rc": -32603}
+
+The next step is to the change the sku in leaf devices to support 8x25G and 8x10G server connectivity. This playbook will be removed after sonic os 4.1 version.
+
+```
+docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/config_hwsku.yml --limit leaf
 ```
 
 ### Push Day 0 Configs
@@ -231,9 +243,19 @@ Next is all configurations. Pushes the following configs for all devices:
 docker-compose-files/redpanda.sh all
 ```
 
+### Breakout for server connected ports
+
+Breakout of server connected ports will be added in Red Panda later. For now, excute the below command manually for the server connected ports.
+
+```
+interface breakout port <port_number> mode <breakout_mode>
+```
+
+Ex: `interface breakout port 1/2 mode 8x10G`
+
 ### Run VLANs Configuration
 
-Next is VLANs configuration. Pushes the following configs for all devices:
+Next is Day2 VLAN configuration when there are changes to vrf/vlan input only. Pushes the following configs for all devices:
 
 - portchannel
 - interface speed
