@@ -107,7 +107,7 @@ sudo firewall-cmd --reload
 
 ### Download Red Panda
 
-During the beta period, we will pull Red Panda directly from GitHub. To download Red Panda [visit our GitHub site](https://github.com/Dell-Networking/red-panda/tree/dev), click the green *Code* button, and select *Download ZIP*.
+During the beta period, we will pull Red Panda directly from GitHub. To download Red Panda [visit our GitHub site](https://github.com/Dell-Networking/red-panda/tree/lab-setup), click the green *Code* button, and select *Download ZIP*.
 
 ![](images/2023-01-18-15-41-26.png)
 
