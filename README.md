@@ -55,7 +55,7 @@ We will add support for newer versions but for initial development we have locke
 - Ubuntu
 - RHEL family systems (includes Rocky Linux)
 
-Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems. Make sure sudo permission is available for the user.
+Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems. 
 
 ## Red Panda Setup
 
@@ -65,6 +65,12 @@ The automation Server provides the following services:
 - DHCP Server
 - ZTP Server
 - Web Server
+
+### User permissions
+
+Make sure the user has sudo permission. 
+
+`sudo -i`
 
 ### Install Docker
 
