@@ -155,32 +155,7 @@ This command will do the following two things:
 - Validates inputs provided; Generates hostname and IPs, ansible variables/inventory, dhcp/ztp configs
 - Copies the preDay0 configurations to target directory - dhcp/ztp configs, ansible variables/inventory
 
-#### Troubleshooting issues in preday0
-(these will be fixed in automation later and removed from documentation)
 
-##### 1) DHCP service not started
-
-Verify if the dhcpd/apache are started properly by issuing the below command
-
-`docker-compose-files/redpanda.sh status`
-
-If dhcpd has not started, issue the below command.
-
-`docker exec -it redpanda-automation-server supervisorctl start dhcpd`
-
-##### 2) 5.0.0 netcommon ansible collection incompatible with enterprise sonic 2.0.0 ansible collection
-
-Issue below command to check the collection versions in the container.
-
-`docker-compose-files/redpanda.sh run ansible-galaxy collection list`
-
-The netcommon ansible collection 5.0.0 is not compatible with enterprise sonic ansible collection 2.0.0. This incompatibility will be fixed in enterprise sonic. 
-If the netcommon version listed above is 5.0.0, as a workaround issue below commands to download specific 4.1.0 version of netcommon ansible collection. 
-
-```
-docker exec -it redpanda-automation-server rm -rf /root/.ansible/collections/ansible_collections/ansible/netcommon
-docker exec -it redpanda-automation-server ansible-galaxy collection install ansible.netcommon:4.1.0
-```
 
 ### Install SONiC
 
@@ -190,13 +165,6 @@ The next step is to install SONiC on all target devices and place them in the co
 docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/install_image.yaml -e "target_os=ONIE ansible_password=admin"
 ```
 
-#### Troubleshooting issues in install 
-
-##### Reload task in install_image playbook throws below error
-But the reload is triggered in the switches. So this error can be ignored. We are working to fix this error.
-
-TASK [dellemc.danaf.image : Reload the Device] **********************************************
-fatal: [RP-spine-r01sw02]: FAILED! => {"changed": false, "msg": "Negative size passed to PyBytes_FromStringAndSize", "rc": -32603}
 
 The next step is to the change the sku in leaf devices to support 8x25G and 8x10G server connectivity. This playbook will be removed after sonic os 4.1 version.
 
@@ -219,16 +187,14 @@ The next step is to push day 0 common configs to all devices:
 docker-compose-files/redpanda.sh day0-push-configs
 ```
 
-### Run ALL Day1 Configurations
+### Run Day1 Configurations
 
-Next is all configurations. Pushes the following configs for all devices:
+Next is Day1 configurations. Pushes the following configs for all devices:
 - ipv4 anycast
 - MAC address
 - lag_interfaces
 - mclag
 - interfaces
-- VLANs
-- VRFs
 - l3_interfaces
 - l2_interfaces
 - VxLAN
@@ -245,23 +211,17 @@ docker-compose-files/redpanda.sh all
 
 ### Run Day2 VLAN configuration
 
-The previous day1 playbook also configures vlan/vrf if already provided in input. The below is required only when we change only the vlan/vrf inputs. 
+Next is Day2 VLAN configurations.
 
 ##### Breakout for server connected ports
 
-Breakout of server connected ports will be added in Red Panda later. For now, execute the below command manually for the server connected ports.
+If breakout mode has to be changed for server connected ports, execute the below command manually for those server connected ports.
 
 ```
 interface breakout port <port_number> mode <breakout_mode>
 ```
 
 Ex: `interface breakout port 1/2 mode 8x10G`
-
-##### Regenerate the ansible variables if vlan/vrf input is modified
-
-```
-docker-compose-files/redpanda.sh preday0-generate-configs
-```
 
 ##### Pushes the following configs for all devices:
 
