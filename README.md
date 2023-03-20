@@ -55,7 +55,17 @@ We will add support for newer versions but for initial development we have locke
 - Ubuntu
 - RHEL family systems (includes Rocky Linux)
 
-Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems. Make sure sudo permission is available for the user.
+Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems. 
+
+Make sure sudo permission is available for the user.
+```bash
+su root
+usermod -aG sudo <YOUR_USER>             //For ubuntu users
+(or)
+ usermod -aG wheel <YOUR_USER>             //For RHEL users
+```
+
+and then log out and log back in as the user.
 
 ## Red Panda Setup
 
@@ -75,7 +85,6 @@ See [here](https://docs.rockylinux.org/gemstones/docker/) for details on how to 
 Add the user to the docker group.
 
 ```bash
-sudo groupadd docker
 sudo usermod -aG docker <YOUR_USER>
 ```
 
