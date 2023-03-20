@@ -57,6 +57,17 @@ We will add support for newer versions but for initial development we have locke
 
 Any Linux system running Docker will likely suffice but these instructions were written for Ubuntu/RHEL. You may have to do some tweaking for other operating systems. 
 
+## Red Panda Setup
+
+The automation Server provides the following services:
+
+- Ansible 
+- DHCP Server
+- ZTP Server
+- Web Server
+
+### Sudo permission for the user
+
 Make sure sudo permission is available for the user.
 ```bash
 su root
@@ -66,15 +77,6 @@ usermod -aG wheel <YOUR_USER>             //For RHEL users
 ```
 
 and then log out and log back in as the user.
-
-## Red Panda Setup
-
-The automation Server provides the following services:
-
-- Ansible 
-- DHCP Server
-- ZTP Server
-- Web Server
 
 ### Install Docker
 
