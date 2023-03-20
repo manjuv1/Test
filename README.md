@@ -103,6 +103,8 @@ You will also need to install docker-compose version 2. The code **will not work
 
 Login to root `su root` and follow [Instructions](https://docs.docker.com/compose/install/other/#on-linux) for installing docker compose version 2.
 
+and then log back in as the user.
+
 ```bash
 sudo chmod +x /usr/local/bin/docker-compose
 ```
