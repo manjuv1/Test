@@ -81,13 +81,9 @@ and then log out and log back in as the user.
 
 ### Install Docker
 
-See [here](https://docs.docker.com/engine/install/ubuntu/) for details on how to install Docker in Ubuntu.
-
-See [here](https://docs.rockylinux.org/gemstones/docker/) for details on how to install Docker in Rocky Linux.
-
 See [Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu/) or [Docker in Rocky Linux](https://docs.rockylinux.org/gemstones/docker/) for Docker installation.
 
-Add the user to the docker group.
+After successfully installing docker, add the user to the docker group.
 
 ```bash
 sudo usermod -aG docker <YOUR_USER>
@@ -96,7 +92,8 @@ sudo usermod -aG docker <YOUR_USER>
 and then log out and log back in as the user.
 
 ##### Verification
-Run `docker version`
+
+Run `docker version
 Run `docker run hello-world` as the user in question to test your privileges. If this does not run correctly, Red Panda will not run correctly.
 
 ### Install docker-compose
