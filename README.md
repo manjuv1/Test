@@ -99,8 +99,13 @@ Run `docker run hello-world` as the user in question to test your privileges. If
 
 ### Install docker-compose
 
-You will also need to install docker-compose version 2. The code **will not work** with version 1. Instructions for 
-installing docker compose version 2 are [here](https://docs.docker.com/compose/install/other/#on-linux).
+You will also need to install docker-compose version 2. The code **will not work** with version 1. 
+
+Login to root `su root` and follow [Instructions](https://docs.docker.com/compose/install/other/#on-linux) for installing docker compose version 2.
+
+```bash
+sudo chmod +x /usr/local/bin/docker-compose
+```
 
 ### Firewall Configuration
 
