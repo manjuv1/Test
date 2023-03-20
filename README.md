@@ -182,18 +182,34 @@ This command will do the following two things:
 
 ### Install SONiC
 
-The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. Pass current switch password in ansible_password.
+The next step is to install SONiC on all target devices and place them in the correct ZTP configuration. 
+
+Pass current switch password only if it is different than the switch password provided in the inputs (fabric.yml)
 
 ```
-docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/install_image.yaml -e "target_os=ONIE ansible_password=admin"
+docker-compose-files/redpanda.sh day0-install-sonic [current_switch_pwd]
 ```
 
+##### Verify reachability and ztp_status
+
+Only after ztp is success in all switches, proceed to next step.
+
+```
+docker exec -it redpanda-automation-server  ansible-playbook /redpanda/playbooks/validate_reachability.yaml
+```
+
+```
+docker exec -it redpanda-automation-server  ansible-playbook /redpanda/playbooks/validate_ztp_status.yaml
+```
 
 The next step is to the change the sku in leaf devices to support 8x25G and 8x10G server connectivity. This playbook will be removed after sonic os 4.1 version.
 
 ```
-docker exec -it redpanda-automation-server ansible-playbook /redpanda/playbooks/config_hwsku.yml --limit leaf
+docker-compose-files/redpanda.sh day0-sku-change
 ```
+
+Verify the reachability and ztp_status again since the above playbook would trigger a reboot.
+
 
 ### Push Day 0 Configs
 
@@ -229,27 +245,15 @@ Next is Day1 configurations. Pushes the following configs for all devices:
 
 
 ```
-docker-compose-files/redpanda.sh all
+docker-compose-files/redpanda.sh day1
 ```
 
 ### Run Day2 VLAN configuration
 
-Next is Day2 VLAN configurations.
-
-##### Breakout for server connected ports
-
-If breakout mode has to be changed for server connected ports, execute the below command manually for those server connected ports.
-
-```
-interface breakout port <port_number> mode <breakout_mode>
-```
-
-Ex: `interface breakout port 1/2 mode 8x10G`
-
-##### Pushes the following configs for all devices:
+Next is Day2 VLAN configuration and change of breakout mode for server connected ports. Pushes the following configs for all devices:
 
 - portchannel
-- interface speed
+- interface breakout and/or speed
 - VLAN
 - VRF
 - VNI_VRF_map
@@ -259,7 +263,7 @@ Ex: `interface breakout port 1/2 mode 8x10G`
 - BGP_af
 
 ```
-docker-compose-files/redpanda.sh vlans
+docker-compose-files/redpanda.sh day2
 ```
 
 ## Helpful Commands
