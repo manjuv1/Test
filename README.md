@@ -85,6 +85,8 @@ See [here](https://docs.docker.com/engine/install/ubuntu/) for details on how to
 
 See [here](https://docs.rockylinux.org/gemstones/docker/) for details on how to install Docker in Rocky Linux.
 
+See [Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu/) or [Docker in Rocky Linux](https://docs.rockylinux.org/gemstones/docker/) for Docker installation.
+
 Add the user to the docker group.
 
 ```bash
