@@ -62,7 +62,7 @@ Make sure sudo permission is available for the user.
 su root
 usermod -aG sudo <YOUR_USER>             //For ubuntu users
 (or)
- usermod -aG wheel <YOUR_USER>             //For RHEL users
+usermod -aG wheel <YOUR_USER>             //For RHEL users
 ```
 
 and then log out and log back in as the user.
