@@ -7,6 +7,7 @@ Ansible Network Automation Framework
   - [Supported Versions of SONiC](#supported-versions-of-sonic)
   - [Supported Operating Systems](#supported-operating-systems)
   - [Red Panda Setup](#red-panda-setup)
+    - [Sudo permission for the user](#sudo-permission)
     - [Install Docker](#install-docker)
     - [Install docker-compose](#install-docker-compose)
     - [Firewall Configuration](#firewall-configuration)
