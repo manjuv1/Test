@@ -55,6 +55,12 @@ The following is a description of the inputs required from the user to generate 
 | ``vlans``    | list of dictionary           | Required | List of vlans <br/> - ``id`` integer, Required, vlan id (vni will be same as vlan id) <br/> - ``ip_subnet`` string, Required, subnet to be used for the vlan <br/> - ``vrf_name`` string, Optional, vrf to which the vlan is mapped; If not provided, will be mapped to default vrf <br/> - ``dhcp_relay_ids`` list, Optional, list of ids in ``dhcp_relays``|
 | ``vlan_members``    | list of dictionary           | Required | Details of vlan members <br/> - ``member_ports`` list, Required, Interfaces listening on the vlan <br/> - ``portchannel_id`` integer, Optional, portchannel id; If not provided, vlan will be assigned to provided member ports instead of portchannel <br/> - ``hostnames`` list of string, Required, list of leafs where the vlan has to be added <br/> - ``tagged_vlans`` list of integers, Optional, tagged vlan list to be mapped <br/> - ``untagged_vlan`` integer, Optional, untagged vlan <br/> - ``speed`` integer, Optional, interface speed |
 
+**interfaces.yml**
+
+| Key        | Type                      | Support               | Description                                             |
+|------------|---------------------------|-----------------------|---------------------------------------------------------|
+| ``interfaces``    | list of dictionary           | Required | Details of interface parameters <br/> - ``interface_names`` list, Required, Standard Interface names/ranges. <br/> - ``hostnames`` list of string, Required, list of hosts where the interfaces has to be configured. <br/> - ``breakout_mode`` string, Optional, Interface breakout mode. |
+
 **defaults.yml**
 
 | Key        | Type                      | Default               | Description                                             |
@@ -80,6 +86,8 @@ Example: Sample Input
 [inventory.yml](input/inventory.yml)
 
 [vlan_vrf.yml](input/vlan_vrf.yml)
+
+[interfaces.yml](input/interfaces.yml)
 
 [defaults.yml](input/defaults.yml)
 
