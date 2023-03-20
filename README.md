@@ -91,7 +91,11 @@ Add the user to the docker group.
 sudo usermod -aG docker <YOUR_USER>
 ```
 
-and then log out and log back in. Run `docker run hello-world` as the user in question to test your privileges. If this does not run correctly, Red Panda will not run correctly.
+and then log out and log back in as the user.
+
+##### Verification
+Run `docker version`
+Run `docker run hello-world` as the user in question to test your privileges. If this does not run correctly, Red Panda will not run correctly.
 
 ### Install docker-compose
 
